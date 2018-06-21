@@ -10,14 +10,14 @@ contract MobiliTokenERC20 {
 
     // This creates an array with all balances
     mapping (address => uint256) public balanceOf;
-    
-    uint80 constant None = uint80(0); 
+    // Store the adrress of the owner
     address public owner = msg.sender;
     
+    //States of a member 
     enum StateType {Possible, Waiting, InService, Free}
 
+    
     struct Member {
-        uint score;
         string location;
         StateType actualState;
         bool isDriver;
@@ -35,13 +35,12 @@ contract MobiliTokenERC20 {
     mapping (address => Member) public members;
     mapping (address => mapping(address => Service)) public services;
     
-
+    
     // This generates a public event on the blockchain that will notify clients
     event Transfer(address indexed from, address indexed to, uint256 value);
 
-    // This notifies clients about the amount burnt
-    event Burn(address indexed from, uint256 value);
 
+    // Events 
     event carRequested(address user, address driver, string location, uint amount );
     event confirmRequest(address user, address driver);
     event carArrived(address user,address driver);
@@ -102,7 +101,7 @@ contract MobiliTokenERC20 {
     
     function join (string location,bool isDriver) public {
         require(members[msg.sender].isMember == false);
-        Member memory newMember = Member(5, location, StateType.Free,isDriver,true);
+        Member memory newMember = Member(location, StateType.Free,isDriver,true);
         members[msg.sender] = newMember;
         emit memberJoin(msg.sender);
     }
