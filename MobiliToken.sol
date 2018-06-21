@@ -12,6 +12,7 @@ contract MobiliTokenERC20 {
     mapping (address => uint256) public balanceOf;
     
     uint80 constant None = uint80(0); 
+    address public owner = msg.sender;
     
     enum StateType {Possible, Waiting, InService, Free}
 
@@ -151,7 +152,10 @@ contract MobiliTokenERC20 {
         require ((members[user].actualState==StateType.InService)&&(members[driver].actualState==StateType.InService));
         members[driver].actualState=StateType.Free;
         members[user].actualState=StateType.Free;
-        _transfer(user, driver,services[user][driver].actualMetters+services[user][driver].aditional);
+        if (services[user][driver].actualMetters+services[user][driver].aditional>1){
+            _transfer(user, owner,(services[user][driver].actualMetters+services[user][driver].aditional)/4);
+            _transfer(user, owner,((services[user][driver].actualMetters+services[user][driver].aditional)/4)*3);
+        }
         Service memory emptyService = Service(0,"","",0,0);
         services[user][driver]=emptyService;
         emit serviceFinished(user,driver);
