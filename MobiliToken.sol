@@ -99,6 +99,16 @@ contract MobiliTokenERC20 {
         _transfer(msg.sender, _to, _value);
     }
     
+    
+    /**
+     *Join new member into map of members
+     *
+     * Join into  members map with a specific location and condition (driver or user)
+     * 
+     * @param location initial location of new member
+     * @param isDriver condition of the member (false if the member is an user, true if the member is a driver)
+     */
+    
     function join (string location,bool isDriver) public {
         require(members[msg.sender].isMember == false);
         Member memory newMember = Member(location, StateType.Free,isDriver,true);
@@ -106,6 +116,17 @@ contract MobiliTokenERC20 {
         emit memberJoin(msg.sender);
     }
     
+    /**
+     *Request a car whit a specific driver 
+     *
+     * Request a car with a specific driver,specific metters,specific destination and corresponding extra cost 
+     * 
+     * @param metters are the total track (in metters) of the travel 
+     * @param destination is the place wich the user want to to arrive
+     * @param aditional is the extra cost defined by time, airport travel, etc
+     * @param driver is the adrress of the driver 
+     */
+     
     function requestCar ( uint metters, string destination, uint  aditional, address driver) public onlyMember {
         require(members[msg.sender].isDriver==false);
         uint  cost = metters + aditional;
