@@ -1,4 +1,4 @@
-pragma solidity ^0.4.16;
+pragma solidity ^0.4.20;
 
 contract MobiliTokenERC20 {
     // Public variables of the token
@@ -38,7 +38,8 @@ contract MobiliTokenERC20 {
     
     // This generates a public event on the blockchain that will notify clients
     event Transfer(address indexed from, address indexed to, uint256 value);
-
+     // This notifies clients about the amount burnt
+    event Burn(address indexed from, uint256 value);
 
     // Events 
     event carRequested(address user, address driver, string location, uint amount );
@@ -129,6 +130,7 @@ contract MobiliTokenERC20 {
      
     function requestCar ( uint metters, string destination, uint  aditional, address driver) public onlyMember {
         require(members[msg.sender].isDriver==false);
+        require(metters>0);
         uint  cost = metters + aditional;
         require(balanceOf[msg.sender] >= cost);
         require((members[msg.sender].actualState == StateType.Free) && (members[driver].actualState == StateType.Free));
@@ -155,34 +157,19 @@ contract MobiliTokenERC20 {
         emit carArrived(msg.sender,driver);
     }
     
-    
-    function cancelService(address user,address driver) public onlyMember{
-        require((members[driver].actualState!=StateType.Free)||(members[user].actualState!=StateType.Free));
-        if (members[driver].actualState == StateType.InService){
-            _finishService(user,driver);        
-        }else {
-            members[driver].actualState=StateType.Free;
-            members[user].actualState=StateType.Free;  
-        }
-        emit serviceFinished(user,driver);
-    }
-    
-    
     function _finishService(address user,address driver) internal{
-        require ((members[user].actualState==StateType.InService)&&(members[driver].actualState==StateType.InService));
+        require ((members[user].actualState!=StateType.Free)&&(members[driver].actualState!=StateType.Free));
         members[driver].actualState=StateType.Free;
         members[user].actualState=StateType.Free;
-        if (services[user][driver].actualMetters+services[user][driver].aditional>1){
-            _transfer(user, owner,(services[user][driver].actualMetters+services[user][driver].aditional)/4);
-            _transfer(user, owner,((services[user][driver].actualMetters+services[user][driver].aditional)/4)*3);
-        }
+        //_transfer(user, owner,(services[user][driver].actualMetters+services[user][driver].aditional)/4);
+        _transfer(user, driver,(((services[user][driver].actualMetters+services[user][driver].aditional)*3)/4));
         Service memory emptyService = Service(0,"","",0,0);
         services[user][driver]=emptyService;
         emit serviceFinished(user,driver);
     }
     
+    
     function finishService(address driver) public onlyMember{
-        require(members[msg.sender].isDriver==false);
         _finishService(msg.sender,driver);
     }
     
@@ -193,12 +180,13 @@ contract MobiliTokenERC20 {
         emit memberUpdated(msg.sender);
     }
     
-    function updateService(address user,address driver,uint _metters){
+
+    function updateService(address user,address driver,uint _metters) public onlyMember{
         require((members[user].actualState==StateType.InService)&&(members[driver].actualState==StateType.InService));
         services[user][driver].actualMetters+=_metters;
         emit serviceUpdated(user,driver);
     }
-    
+
     modifier onlyMember(){
         require(members[msg.sender].isMember==true);
         _;
