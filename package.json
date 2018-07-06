@@ -4,17 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "lite-server"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "ipfs": "^0.29.3",
+    "orbit-db": "^0.19.8",
     "web3": "github:ethereum/web3.js"
   },
   "devDependencies": {
     "lite-server": "^2.3.0"
-  },
-  "scripts": {    
-    "dev": "lite-server"
   }
 }

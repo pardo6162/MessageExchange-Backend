@@ -89,7 +89,7 @@ messageSend.watch(function(error, result){
         $("#loader").hide();
         $("#Message").html('msgid '+result.args.msgid + '\n from '+result.args.from+ '\n to '+result.args.to+ '\n msgtext '+result.args.msgtext);
                 } else {
-                    $("#loader").hide();
+                    $("#dloader").hide();
                     console.log(error);
                 }
 });
