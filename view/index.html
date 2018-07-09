@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MessageExchange</title>
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="web3_conect.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-firestore.js"></script>
+
+
+	<script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script>
+	<script>
+	  // Initialize Firebase
+	  var config = {
+	    apiKey: "AIzaSyCVe16nFz_hD-aMp3EBogbtgsbRrk3aVmE",
+	    authDomain: "messageexchange-a3644.firebaseapp.com",
+	    databaseURL: "https://messageexchange-a3644.firebaseio.com",
+	    projectId: "messageexchange-a3644",
+	    storageBucket: "messageexchange-a3644.appspot.com",
+	    messagingSenderId: "1092883253820"
+	  };
+	  firebase.initializeApp(config);
+	</script>
+
+</head>
+<body>
+    <div class="container">
+
+        <h1>Message Exchange</h1>
+
+        <h2 id="Message"></h2>
+        <img id="loader" src="https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif">
+
+        <label for="name" class="col-lg-2 control-label">Adrress Receiver</label>
+        <input id="address" type="text">
+
+        <label for="name" class="col-lg-2 control-label">Message</label>
+        <input id="message" type="text">
+
+        <button id="button">Send message</button>
+
+
+    </div>
+
+  
+</body>
+</html>

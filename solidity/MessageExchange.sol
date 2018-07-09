@@ -9,14 +9,14 @@ contract FileExchangeContract {
         uint128 msgid,
         address indexed from,
         address indexed to,
-        string msgtext
+        bytes32 msgtext
     );
 
     function FileExchangeContract() public {
         filesInbox = 0;
     }
     
-    function sendMessage(address to, string msgtext) public {
+    function sendMessage(address to, bytes32 msgtext) public {
         usermsgcnt[to]++;
         ReceiveMessage(filesInbox++, msg.sender, to, msgtext);
     }
