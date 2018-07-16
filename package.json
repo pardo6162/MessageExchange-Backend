@@ -1,21 +1,22 @@
 {
-  "name": "prototype-web3",
+  "name": "messageexchange",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "lite-server"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pardo6162/MessageExchange-Backend.git"
+  },
+  "author": "CODING",
   "license": "ISC",
-  "dependencies": {
-    "ejs": "^2.6.1",
-    "express": "^4.16.3",
-    "ipfs": "^0.29.3",
-    "orbit-db": "^0.19.8",
-    "web3": "github:ethereum/web3.js"
+  "bugs": {
+    "url": "https://github.com/pardo6162/MessageExchange-Backend/issues"
   },
-  "devDependencies": {
-    "lite-server": "^2.3.0"
+  "homepage": "https://github.com/pardo6162/MessageExchange-Backend#readme",
+  "dependencies": {
+    "web3": "github:ethereum/web3.js"
   }
 }

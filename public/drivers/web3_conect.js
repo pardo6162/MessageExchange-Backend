@@ -1,9 +1,5 @@
-if (typeof web3 !== 'undefined') {
-    web3 = new Web3(web3.currentProvider);
-} else {
-    // set the provider you want from Web3.providers
-    web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-}
+
+web3 = new Web3(web3.currentProvider);
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 var messageContract = web3.eth.contract([
@@ -28,7 +24,7 @@ var messageContract = web3.eth.contract([
 			{
 				"indexed": false,
 				"name": "msgtext",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
 		"name": "ReceiveMessage",
@@ -43,7 +39,7 @@ var messageContract = web3.eth.contract([
 			},
 			{
 				"name": "msgtext",
-				"type": "string"
+				"type": "bytes32"
 			}
 		],
 		"name": "sendMessage",
@@ -79,7 +75,7 @@ var messageContract = web3.eth.contract([
 	}
 ]);
 
-var contract= messageContract.at('0x2269C1D8e3AC46b8B33fCfa70fcDF948994e0f44');
+var contract= messageContract.at('0x00AC5ed8724100B9D34CcAB0666D54Ad61Ef3590');
 console.log(contract);
 
 var messageSend = contract.ReceiveMessage({},'latest');
@@ -97,8 +93,10 @@ messageSend.watch(function(error, result){
 $("#button").click(function() {
 	 $("#loader").show();
     contract.sendMessage($("#address").val(), $("#message").val(),(err, res) => {
-        if (err) 
+        if (err) {
+        	console.log(err);
             $("#loader").hide();
+        }
 	});
 })
 

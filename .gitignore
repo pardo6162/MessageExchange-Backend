@@ -5,3 +5,6 @@
 # others
 
 package-lock.json
+
+.fire*
+
