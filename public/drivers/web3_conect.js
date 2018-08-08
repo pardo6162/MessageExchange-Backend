@@ -83,7 +83,7 @@ var messageSend = contract.ReceiveMessage({},'latest');
 messageSend.watch(function(error, result){
     if (!error){
         $("#loader").hide();
-        $("#Message").html('msgid '+result.args.msgid + '\n from '+result.args.from+ '\n to '+result.args.to+ '\n msgtext '+result.args.msgtext);
+        $("#Message").html('msgid '+result.args.msgid + '\n from '+result.args.from+ '\n to '+result.args.to+ '\n msgtext '+web3.toAscii(result.args.msgtext));
                 } else {
                     $("#dloader").hide();
                     console.log(error);
